@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>scaci — network engineering, distributed labs, AI infra</title>
+<meta name="description" content="Daniele Scacciavillani (scaci) — Senior Network Engineer. Building dNLab, an open-source distributed platform for virtual network labs powered by Containerlab.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="scaci — network engineering & distributed labs">
+<meta property="og:description" content="Open-source tooling at the intersection of enterprise networking and AI infrastructure. dNLab, FLiNOS, and more.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://scaci.github.io/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="scaci — network engineering & distributed labs">
+<meta name="twitter:description" content="Open-source tooling at the intersection of enterprise networking and AI infrastructure.">
+
+<!-- Google Search Console verification — replace with your own meta tag from GSC -->
+<!-- <meta name="google-site-verification" content="YOUR_CODE_HERE"> -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg: #0a0d12;
+    --bg-panel: #10141b;
+    --bg-panel-2: #151b24;
+    --border: #232a37;
+    --border-bright: #2f3a4d;
+    --text: #e7eaf0;
+    --text-dim: #8b93a3;
+    --text-faint: #545e70;
+    --amber: #f2a93b;
+    --teal: #4fd8c4;
+    --red: #e5533d;
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *, *::before, *::after{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.5;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-position: -1px -1px;
+    background-attachment: fixed;
+  }
+
+  a{ color: inherit; }
+
+  ::selection{ background: var(--amber); color: var(--bg); }
+
+  :focus-visible{
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- nav ---------- */
+  nav{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(10,13,18,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .logo{
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .logo .dot{
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 8px var(--teal);
+    flex: none;
+  }
+  .navlinks{
+    display: flex;
+    gap: 28px;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .navlinks a{
+    text-decoration: none;
+    color: var(--text-dim);
+    transition: color 0.15s ease;
+  }
+  .navlinks a:hover{ color: var(--amber); }
+
+  /* ---------- hero ---------- */
+  header.hero{
+    padding: 96px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    margin: 0 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before{
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--teal);
+  }
+  h1{
+    font-family: var(--mono);
+    font-weight: 800;
+    font-size: clamp(32px, 5.5vw, 56px);
+    line-height: 1.08;
+    margin: 0 0 22px;
+    max-width: 15ch;
+    letter-spacing: -0.01em;
+  }
+  h1 .accent{ color: var(--amber); }
+  .lede{
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 52ch;
+    margin: 0 0 36px;
+  }
+  .lede code{
+    font-family: var(--mono);
+    background: var(--bg-panel-2);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: var(--text);
+  }
+
+  .cta-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .btn{
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 13px 20px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  .btn-primary{
+    background: var(--amber);
+    color: #14100a;
+    border: 1px solid var(--amber);
+  }
+  .btn-primary:hover{ transform: translateY(-1px); background: #ffb94f; }
+  .btn-ghost{
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border-bright);
+  }
+  .btn-ghost:hover{ border-color: var(--teal); color: var(--teal); }
+
+  /* ---------- topology signature ---------- */
+  .topo{
+    margin-top: 64px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-panel);
+    overflow: hidden;
+  }
+  .topo-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+  .topo-head .lights{ display: flex; gap: 6px; }
+  .topo-head .lights span{
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--border-bright);
+  }
+  .topo svg{ display: block; width: 100%; height: auto; }
+
+  .pkt{
+    animation: travel 6s linear infinite;
+  }
+  @keyframes travel{
+    0%   { offset-distance: 0%; opacity: 0; }
+    5%   { opacity: 1; }
+    95%  { opacity: 1; }
+    100% { offset-distance: 100%; opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .pkt{ animation: none; opacity: 0; }
+  }
+
+  /* ---------- sections ---------- */
+  section{ padding: 64px 0; border-top: 1px solid var(--border); }
+  .section-head{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .section-title{
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .section-title .n{ color: var(--amber); }
+
+  /* ---------- project cards ---------- */
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .grid-single{
+    grid-template-columns: minmax(280px, 440px);
+  }
+  .card{
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .card:hover{ border-color: var(--border-bright); transform: translateY(-2px); }
+  .card.featured{
+    border-color: var(--amber);
+    background: linear-gradient(180deg, rgba(242,169,59,0.06), var(--bg-panel) 40%);
+  }
+  .card-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card h3{
+    font-family: var(--mono);
+    font-size: 17px;
+    margin: 0;
+  }
+  .status{
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    border: 1px solid;
+  }
+  .status.up{ color: var(--teal); border-color: var(--teal); }
+  .status.dev{ color: var(--amber); border-color: var(--amber); }
+  .card p{
+    color: var(--text-dim);
+    font-size: 14.5px;
+    margin: 0;
+    flex: 1;
+  }
+  .tags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag{
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    background: var(--bg-panel-2);
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .card-link{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--amber);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card-link:hover{ text-decoration: underline; }
+
+  /* ---------- stack ---------- */
+  .stack-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--mono);
+  }
+  .stack-list span{
+    font-size: 13.5px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 12px;
+    background: var(--bg-panel);
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top: 1px solid var(--border);
+    padding: 32px 0 48px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer a{ color: var(--text-dim); text-decoration: none; }
+  footer a:hover{ color: var(--teal); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo"><span class="dot"></span>scaci</div>
+    <div class="navlinks">
+      <a href="#projects">projects</a>
+      <a href="#stack">stack</a>
+      <a href="https://github.com/scaci" target="_blank" rel="noopener">github ↗</a>
+      <a href="https://www.linkedin.com/in/danielepellegrini" target="_blank" rel="noopener">linkedin ↗</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">senior network engineer</p>
+    <h1>Building networks that<br>run <span class="accent">themselves</span>.</h1>
+    <p class="lede">
+      Enterprise networking background — NX-OS, ACI, EVPN-VXLAN, BGP, FRR — now spent
+      mostly at the intersection of network engineering and AI infrastructure.
+      Currently building <code>dNLab</code>, an open-source distributed platform
+      for virtual network labs.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/scaci/dnlab" target="_blank" rel="noopener">
+        Open dNLab on GitHub →
+      </a>
+      <a class="btn btn-ghost" href="#projects">
+        See all projects
+      </a>
+    </div>
+
+    <div class="topo">
+      <div class="topo-head">
+        <span>topology.svg — spine-leaf, 2 nodes</span>
+        <div class="lights"><span></span><span></span><span></span></div>
+      </div>
+      <svg viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animated diagram of a spine-leaf network topology with a packet traveling across the links">
+        <defs>
+          <path id="path-a" d="M 400 50 L 140 170"/>
+          <path id="path-b" d="M 400 50 L 400 170"/>
+          <path id="path-c" d="M 400 50 L 660 170"/>
+        </defs>
+
+        <!-- links -->
+        <line x1="400" y1="50" x2="140" y2="170" stroke="#232a37" stroke-width="2"/>
+        <line x1="400" y1="50" x2="400" y2="170" stroke="#232a37" stroke-width="2"/>
+        <line x1="400" y1="50" x2="660" y2="170" stroke="#232a37" stroke-width="2"/>
+
+        <!-- spine -->
+        <rect x="352" y="26" width="96" height="48" rx="6" fill="#151b24" stroke="#2f3a4d" stroke-width="1.5"/>
+        <text x="400" y="55" text-anchor="middle" fill="#e7eaf0" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700">spine01</text>
+
+        <!-- leaves -->
+        <rect x="92" y="146" width="96" height="48" rx="6" fill="#151b24" stroke="#2f3a4d" stroke-width="1.5"/>
+        <text x="140" y="175" text-anchor="middle" fill="#e7eaf0" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700">leaf01</text>
+
+        <rect x="352" y="146" width="96" height="48" rx="6" fill="#151b24" stroke="#2f3a4d" stroke-width="1.5"/>
+        <text x="400" y="175" text-anchor="middle" fill="#e7eaf0" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700">leaf02</text>
+
+        <rect x="612" y="146" width="96" height="48" rx="6" fill="#151b24" stroke="#2f3a4d" stroke-width="1.5"/>
+        <text x="660" y="175" text-anchor="middle" fill="#e7eaf0" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700">leaf03</text>
+
+        <!-- traveling packets -->
+        <circle r="4.5" fill="#4fd8c4" class="pkt" style="offset-path: path('M 400 50 L 140 170'); animation-delay: 0s;"/>
+        <circle r="4.5" fill="#f2a93b" class="pkt" style="offset-path: path('M 400 50 L 400 170'); animation-delay: 2s;"/>
+        <circle r="4.5" fill="#4fd8c4" class="pkt" style="offset-path: path('M 400 50 L 660 170'); animation-delay: 4s;"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="section-title">projects <span class="n">/01</span></h2>
+    </div>
+    <div class="grid grid-single">
+
+      <div class="card featured">
+        <div class="card-top">
+          <h3>dNLab</h3>
+          <span class="status up">active</span>
+        </div>
+        <p>
+          Distributed platform for designing and deploying virtual network labs through
+          a graphical interface. Built around Containerlab, scales a topology across
+          multiple physical nodes automatically and transparently. Learning and
+          experimentation platform with built-in RBAC for shared, collaborative labs.
+        </p>
+        <div class="tags">
+          <span class="tag">containerlab</span>
+          <span class="tag">evpn-vxlan</span>
+          <span class="tag">bgp</span>
+          <span class="tag">nx-os</span>
+          <span class="tag">agpl-3.0</span>
+        </div>
+        <a class="card-link" href="https://github.com/scaci/dnlab" target="_blank" rel="noopener">github.com/scaci/dnlab →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="section-title">stack</h2>
+    </div>
+    <div class="stack-list">
+      <span>NX-OS</span>
+      <span>ACI</span>
+      <span>EVPN-VXLAN</span>
+      <span>BGP / OSPF</span>
+      <span>FRR</span>
+      <span>Juniper Apstra</span>
+      <span>Containerlab</span>
+      <span>vrnetlab</span>
+      <span>Cumulus / NVUE</span>
+      <span>Proxmox</span>
+      <span>Neo4j</span>
+      <span>Docker</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
+    <span>scaci — network engineering & distributed systems</span>
+    <span>
+      <a href="https://github.com/scaci" target="_blank" rel="noopener">github.com/scaci</a>
+      &nbsp;·&nbsp;
+      <a href="https://www.linkedin.com/in/danielepellegrini" target="_blank" rel="noopener">linkedin</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
