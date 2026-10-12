@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>n4alab — network engineering, distributed labs, AI infra</title>
-<meta name="description" content="Daniele Scacciavillani (n4alab) — Senior Network Engineer. Building dNLab, an open-source distributed platform for virtual network labs powered by Containerlab.">
+<title>n4alab — open networking products for engineers</title>
+<meta name="description" content="n4alab builds open networking products for engineers: dNLab for distributed virtual network labs and FLiNOS, a friendly Linux network operating system in development.">
 
 <!-- Open Graph -->
-<meta property="og:title" content="n4alab — network engineering & distributed labs">
-<meta property="og:description" content="Open-source tooling at the intersection of enterprise networking and AI infrastructure. dNLab, FLiNOS, and more.">
+<meta property="og:title" content="n4alab — open networking products for engineers">
+<meta property="og:description" content="dNLab for distributed virtual network labs and FLiNOS, a friendly Linux network operating system in development.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://n4alab.github.io/">
 
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="n4alab — network engineering & distributed labs">
-<meta name="twitter:description" content="Open-source tooling at the intersection of enterprise networking and AI infrastructure.">
+<meta name="twitter:title" content="n4alab — open networking products for engineers">
+<meta name="twitter:description" content="dNLab for distributed virtual network labs and FLiNOS, a friendly Linux network operating system in development.">
 
 <!-- Google Search Console verification — replace with your own meta tag from GSC -->
 <meta name="google-site-verification" content="YjA9wKS0a7ASqe1s1A3GjrsPEv2G0sr_wZCbajm1NVY" />
@@ -261,9 +261,6 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 18px;
   }
-  .grid-single{
-    grid-template-columns: minmax(280px, 440px);
-  }
   .card{
     background: var(--bg-panel);
     border: 1px solid var(--border);
@@ -298,6 +295,26 @@
   }
   .status.up{ color: var(--teal); border-color: var(--teal); }
   .status.dev{ color: var(--amber); border-color: var(--amber); }
+  .product-logo{
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #05070a;
+  }
+  .project-note{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--amber);
+    margin: -2px 0 0;
+  }
+  .card-actions{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+  }
   .card p{
     color: var(--text-dim);
     font-size: 14.5px;
@@ -359,6 +376,16 @@
   }
   footer a{ color: var(--text-dim); text-decoration: none; }
   footer a:hover{ color: var(--teal); }
+
+  @media (max-width: 600px){
+    .wrap{ padding-left: 18px; padding-right: 18px; }
+    nav .wrap{ height: auto; min-height: 60px; padding-top: 12px; padding-bottom: 12px; align-items: flex-start; gap: 14px; }
+    .navlinks{ justify-content: flex-end; gap: 10px 14px; font-size: 12px; }
+    header.hero{ padding: 64px 0 56px; }
+    .lede{ font-size: 16px; }
+    .topo{ margin-top: 48px; }
+    .card{ padding: 20px; }
+  }
 </style>
 </head>
 <body>
@@ -367,7 +394,7 @@
   <div class="wrap">
     <div class="logo"><span class="dot"></span>n4alab</div>
     <div class="navlinks">
-      <a href="#projects">projects</a>
+      <a href="#projects">products</a>
       <a href="#stack">stack</a>
       <a href="https://github.com/n4alab" target="_blank" rel="noopener">github ↗</a>
       <a href="https://www.linkedin.com/in/danielepellegrini" target="_blank" rel="noopener">linkedin ↗</a>
@@ -377,26 +404,25 @@
 
 <header class="hero">
   <div class="wrap">
-    <p class="eyebrow">senior network engineer</p>
-    <h1>Building networks that<br>run <span class="accent">themselves</span>.</h1>
+    <p class="eyebrow">open networking products</p>
+    <h1>Tools for networks that<br><span class="accent">keep evolving</span>.</h1>
     <p class="lede">
-      Enterprise networking background — NX-OS, ACI, EVPN-VXLAN, BGP, FRR — now spent
-      mostly at the intersection of network engineering and AI infrastructure.
-      Currently building <code>dNLab</code>, an open-source distributed platform
-      for virtual network labs.
+      Built for network engineers who need practical, open tooling: <code>dNLab</code>
+      for distributed virtual labs, and <code>FLiNOS</code>, a friendly Linux network
+      operating system now in development.
     </p>
     <div class="cta-row">
       <a class="btn btn-primary" href="https://github.com/n4alab/dnlab" target="_blank" rel="noopener">
-        Open dNLab on GitHub →
+        Explore dNLab →
       </a>
-      <a class="btn btn-ghost" href="#projects">
-        See all projects
+      <a class="btn btn-ghost" href="https://github.com/n4alab/flinos" target="_blank" rel="noopener">
+        Meet FLiNOS →
       </a>
     </div>
 
     <div class="topo">
       <div class="topo-head">
-        <span>topology.svg — spine-leaf, 2 nodes</span>
+        <span>n4alab — products / 2 active tracks</span>
         <div class="lights"><span></span><span></span><span></span></div>
       </div>
       <svg viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animated diagram of a spine-leaf network topology with a packet traveling across the links">
@@ -437,20 +463,19 @@
 <section id="projects">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="section-title">projects <span class="n">/01</span></h2>
+      <h2 class="section-title">products <span class="n">/02</span></h2>
     </div>
-    <div class="grid grid-single">
+    <div class="grid">
 
       <div class="card featured">
         <div class="card-top">
           <h3>dNLab</h3>
-          <span class="status up">active</span>
+          <span class="status up">released · ongoing</span>
         </div>
         <p>
-          Distributed platform for designing and deploying virtual network labs through
-          a graphical interface. Built around Containerlab, scales a topology across
-          multiple physical nodes automatically and transparently. Learning and
-          experimentation platform with built-in RBAC for shared, collaborative labs.
+          A distributed platform for designing and deploying virtual network labs with
+          Containerlab. Start on one node, scale transparently across many, and share
+          collaborative labs with built-in RBAC.
         </p>
         <div class="tags">
           <span class="tag">containerlab</span>
@@ -459,7 +484,33 @@
           <span class="tag">nx-os</span>
           <span class="tag">agpl-3.0</span>
         </div>
-        <a class="card-link" href="https://github.com/n4alab/dnlab" target="_blank" rel="noopener">github.com/n4alab/dnlab →</a>
+        <div class="card-actions">
+          <a class="card-link" href="https://github.com/n4alab/dnlab" target="_blank" rel="noopener">GitHub →</a>
+          <a class="card-link" href="https://github.com/n4alab/dnlab/releases" target="_blank" rel="noopener">View releases →</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <h3>FLiNOS</h3>
+          <span class="status dev">in development</span>
+        </div>
+        <img class="product-logo" src="assets/flinos-denim-on-black.svg" alt="FLiNOS — Friendly Linux Network Operating System">
+        <p>
+          A Debian-based network appliance for practical Layer 2 and Layer 3 workflows,
+          with a Junos-style CLI for candidate configuration, comparison, commit,
+          rollback, and verification. Designed to become a virtual device for dNLab.
+        </p>
+        <p class="project-note">Not production-ready. Compatibility with dNLab is a target, not yet certified.</p>
+        <div class="tags">
+          <span class="tag">debian</span>
+          <span class="tag">layer 2 / layer 3</span>
+          <span class="tag">junos-style cli</span>
+          <span class="tag">virtual appliance</span>
+        </div>
+        <div class="card-actions">
+          <a class="card-link" href="https://github.com/n4alab/flinos" target="_blank" rel="noopener">GitHub →</a>
+        </div>
       </div>
 
     </div>
@@ -490,8 +541,12 @@
 
 <footer>
   <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
-    <span>n4alab — network engineering & distributed systems</span>
+    <span>n4alab — open networking products for engineers</span>
     <span>
+      <a href="https://github.com/n4alab/dnlab" target="_blank" rel="noopener">dNLab</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/n4alab/flinos" target="_blank" rel="noopener">FLiNOS</a>
+      &nbsp;·&nbsp;
       <a href="https://github.com/n4alab" target="_blank" rel="noopener">github.com/n4alab</a>
       &nbsp;·&nbsp;
       <a href="https://www.linkedin.com/in/danielepellegrini" target="_blank" rel="noopener">linkedin</a>
